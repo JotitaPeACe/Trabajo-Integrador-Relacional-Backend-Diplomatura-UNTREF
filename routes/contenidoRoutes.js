@@ -79,20 +79,3 @@ router.delete('/:id', async (req, res) => {
 
 module.exports = router;
 
-
-// // Eliminar contenido
-// router.delete('/:id', async (req, res) => {
-//     try {
-//         const contenido = await Contenido.findByPk(req.params.id);
-//         if (!contenido) {
-//             return res.status(404).json({ message: 'Content not found' });
-//         }
-//         await contenido.destroy();
-//         res.status(200).json({ message: 'Content deleted successfully' });
-//     } catch (error) {
-//         console.error('Error deleting content:', error);
-//         res.status(500).json({ message: 'Error deleting content', error });
-//     }
-// });
-
-module.exports = router;
