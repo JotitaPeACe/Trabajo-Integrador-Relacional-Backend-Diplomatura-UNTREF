@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../conexion/database'); // La conexión a tu DB
+const sequelize = require('../conexion/database'); // La conexión a DB
 
 const Actor = sequelize.define('Actor', {
     id: {
@@ -13,7 +13,7 @@ const Actor = sequelize.define('Actor', {
     },
 }, {
     tableName: 'actores',  // El nombre de la tabla en la base de datos
-    timestamps: false,     // Si no estás usando columnas createdAt y updatedAt
+    timestamps: false,     
 });
 
 module.exports = Actor;

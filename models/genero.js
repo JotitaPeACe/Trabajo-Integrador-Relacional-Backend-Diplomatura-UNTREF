@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../conexion/database'); // La conexión a tu DB
+const sequelize = require('../conexion/database'); // La conexión a DB
 
 const Genero = sequelize.define('Genero', {
     id: {
