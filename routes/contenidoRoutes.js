@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Contenido = require('../models/contenido');
 
+
 // Obtener todos los contenidos
 router.get('/', async (req, res) => {
     try {
@@ -53,19 +54,45 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+
+
+
 // Eliminar contenido
 router.delete('/:id', async (req, res) => {
     try {
-        const contenido = await Contenido.findByPk(req.params.id);
-        if (!contenido) {
-            return res.status(404).json({ message: 'Content not found' });
-        }
-        await contenido.destroy();
+        // Primero, elimina las referencias en 'contenido_actores' que dependen de este contenido
+        await ContenidoActores.destroy({
+            where: { contenido_id: req.params.id }
+        });
+
+        // Ahora, elimina el contenido
+        await Contenido.destroy({
+            where: { id: req.params.id }
+        });
+
         res.status(200).json({ message: 'Content deleted successfully' });
     } catch (error) {
         console.error('Error deleting content:', error);
         res.status(500).json({ message: 'Error deleting content', error });
     }
 });
+
+module.exports = router;
+
+
+// // Eliminar contenido
+// router.delete('/:id', async (req, res) => {
+//     try {
+//         const contenido = await Contenido.findByPk(req.params.id);
+//         if (!contenido) {
+//             return res.status(404).json({ message: 'Content not found' });
+//         }
+//         await contenido.destroy();
+//         res.status(200).json({ message: 'Content deleted successfully' });
+//     } catch (error) {
+//         console.error('Error deleting content:', error);
+//         res.status(500).json({ message: 'Error deleting content', error });
+//     }
+// });
 
 module.exports = router;
