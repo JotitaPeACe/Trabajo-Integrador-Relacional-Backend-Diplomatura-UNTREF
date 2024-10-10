@@ -6,7 +6,7 @@ const ContenidoActores = sequelize.define('contenido_actores', {
         type: DataTypes.BIGINT,
         primaryKey: true,
         references: {
-            model: 'contenido', // Nombre de la tabla a la que hace referencia
+            model: 'contenido', 
             key: 'id',
         },
     },
@@ -14,7 +14,7 @@ const ContenidoActores = sequelize.define('contenido_actores', {
         type: DataTypes.BIGINT,
         primaryKey: true,
         references: {
-            model: 'actores', // Nombre de la tabla de actores
+            model: 'actores', 
             key: 'id',
         },
     },

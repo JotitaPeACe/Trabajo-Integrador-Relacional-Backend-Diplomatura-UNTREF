@@ -8,7 +8,6 @@ const Categoria = require('./categoria');
 const ContenidoActores = require('./contenido_actores');  // Modelo intermedio
 const ContenidoGeneros = require('./contenido_generos');  // Modelo intermedio
 
-// Definición del modelo Contenido
 const Contenido = sequelize.define('Contenido', {
     id: {
         type: DataTypes.BIGINT,
@@ -83,5 +82,4 @@ Categoria.hasMany(Contenido, {
     foreignKey: 'categoria_id',
 });
 
-// Exportar el modelo
 module.exports = Contenido;

@@ -6,7 +6,7 @@ const ContenidoGeneros = sequelize.define('contenido_generos', {
         type: DataTypes.BIGINT,
         primaryKey: true,
         references: {
-            model: 'contenido', // Nombre de la tabla de contenido
+            model: 'contenido', 
             key: 'id',
         },
     },
@@ -14,7 +14,7 @@ const ContenidoGeneros = sequelize.define('contenido_generos', {
         type: DataTypes.BIGINT,
         primaryKey: true,
         references: {
-            model: 'generos', // Nombre de la tabla de generos
+            model: 'generos', 
             key: 'id',
         },
     },
