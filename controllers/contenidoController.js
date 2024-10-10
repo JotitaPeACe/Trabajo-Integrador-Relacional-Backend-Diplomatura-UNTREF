@@ -127,6 +127,7 @@ exports.createContent = async (req, res) => {
     }
 };
 
+
 // Actualizar contenido
 exports.updateContent = async (req, res) => {
     try {
