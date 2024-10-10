@@ -3,7 +3,7 @@ const app = express();
 const contenidoRoutes = require('./routes/contenidoRoutes');
 
 // Middlewares
-app.use(express.json());  // Para manejar JSON en las solicitudes
+app.use(express.json());
 
 // Rutas
 app.use('/contenido', contenidoRoutes);
