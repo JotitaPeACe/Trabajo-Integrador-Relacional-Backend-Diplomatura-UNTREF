@@ -11,15 +11,15 @@ app.use('/contenido', contenidoRoutes);
 // Inicia el servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Servidor ejecutandose en http://localhost:${PORT}`);
 });
 
 const sequelize = require('./conexion/database');
 
 sequelize.sync()
     .then(() => {
-        console.log('Database synchronized');
+        console.log('Base de datos sincronizada');
     })
     .catch((err) => {
-        console.error('Error syncing database:', err);
+        console.error('Error sincronizando base de datos:', err);
     });

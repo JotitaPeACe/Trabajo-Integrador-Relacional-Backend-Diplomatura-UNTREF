@@ -1,0 +1,56 @@
+### Obtener todos los contenidos
+GET http://localhost:3000/contenido
+Accept: application/json
+
+### Obtener un contenido por ID
+GET http://localhost:3000/contenido/110
+Accept: application/json
+
+### Filtrar contenido por título
+GET http://localhost:3000/contenido/filter/titulo?titulo=Riverdale
+Accept: application/json
+
+### Filtrar contenido por categoría
+GET http://localhost:3000/contenido/filter/categoria?categoria=pelicula
+Accept: application/json
+
+### Filtrar contenido por género
+GET http://localhost:3000/contenido/filter/genero?genero=Drama
+Accept: application/json
+
+### Crear nuevo contenido
+POST http://localhost:3000/contenido
+Content-Type: application/json
+
+{
+  "titulo": "Nueva Película",
+  "categoria_id": 1,
+  "gen": "Acción",
+  "resumen": "Una emocionante película de acción.",
+  "temporadas": "1",
+  "duracion": "120 min",
+  "trailer": "http://trailer-url.com",
+  "poster": "http://poster-url.com",
+  "actores": ["Messi", "Ronaldo"],
+  "generos": ["Acción", "Aventura"]
+}
+
+### Actualizar contenido por ID
+PUT http://localhost:3000/contenido/110
+Content-Type: application/json
+
+{
+  "titulo": "Película Actualizada",
+  "categoria_id": 2,
+  "gen": "Acción",
+  "resumen": "Una emocionante película de acción actualizada.",
+  "temporadas": "44",
+  "duracion": "N/A",
+  "trailer": "http://nuevo-trailer-url.com",
+  "poster": "http://nuevo-poster-url.com",
+  "actores": ["Mbappe", "Di Maria"],
+  "generos": ["Acción", "Drama"]
+}
+
+### Eliminar contenido por ID
+DELETE http://localhost:3000/contenido/

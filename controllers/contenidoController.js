@@ -14,8 +14,8 @@ exports.getAllContent = async (req, res) => {
         });
         res.status(200).json(contenidos);
     } catch (error) {
-        console.error('Error fetching contents:', error);
-        res.status(500).json({ message: 'Error fetching contents', error });
+        console.error('Error al obtener contenido:', error);
+        res.status(500).json({ message: 'Error al obtener contenido', error });
     }
 };
 
@@ -26,12 +26,12 @@ exports.getContentById = async (req, res) => {
             include: [Actor, Genero, Categoria]
         });
         if (!contenido) {
-            return res.status(404).json({ message: 'Content not found' });
+            return res.status(404).json({ message: 'Contenido no encontrado' });
         }
         res.status(200).json(contenido);
     } catch (error) {
-        console.error('Error fetching content by ID:', error);
-        res.status(500).json({ message: 'Error fetching content by ID', error });
+        console.error('Error al obtener contenido por ID:', error);
+        res.status(500).json({ message: 'Error al obtener contenido por ID', error });
     }
 };
 
@@ -48,13 +48,13 @@ exports.filterByTitle = async (req, res) => {
         });
 
         if (contenidos.length === 0) {
-            return res.status(404).json({ message: 'No content found with that title' });
+            return res.status(404).json({ message: 'No se encontró contenido con ese titulo' });
         }
 
         res.status(200).json(contenidos);
     } catch (error) {
-        console.error('Error filtering by title:', error);
-        res.status(500).json({ message: 'Error filtering by title', error });
+        console.error('Error de filtrado por titulo:', error);
+        res.status(500).json({ message: 'Error de filtrado por titulo', error });
     }
 };
 
@@ -74,13 +74,13 @@ exports.filterByCategory = async (req, res) => {
         });
 
         if (contenidos.length === 0) {
-            return res.status(404).json({ message: 'No content found in that category' });
+            return res.status(404).json({ message: 'No se encuentra contenido en esa categoría' });
         }
 
         res.status(200).json(contenidos);
     } catch (error) {
-        console.error('Error filtering by category:', error);
-        res.status(500).json({ message: 'Error filtering by category', error });
+        console.error('Error al filtrar por categoria:', error);
+        res.status(500).json({ message: 'Error al filtrar por categoria', error });
     }
 };
 
@@ -100,46 +100,130 @@ exports.filterByGenre = async (req, res) => {
         });
 
         if (contenidos.length === 0) {
-            return res.status(404).json({ message: 'No content found with that genre' });
+            return res.status(404).json({ message: 'No se encontró contenido con ese genero' });
         }
 
         res.status(200).json(contenidos);
     } catch (error) {
-        console.error('Error filtering by genre:', error);
-        res.status(500).json({ message: 'Error filtering by genre', error });
+        console.error('Error al filtrar por genero:', error);
+        res.status(500).json({ message: 'Error al filtrar por genero', error });
     }
 };
 
-// Crear nuevo contenido
+//CREAR CONTENIDO
 exports.createContent = async (req, res) => {
-    const { titulo, categoria_id, gen, resumen, temporadas, duracion, trailer, poster } = req.body;
+    const { titulo, categoria_id, gen, resumen, temporadas, duracion, trailer, poster, actores, generos } = req.body;
 
+    // Validar campos obligatorios
     if (!titulo || !categoria_id || !gen || !resumen || !trailer || !poster) {
-        return res.status(400).json({ message: 'All mandatory fields must be filled' });
+        return res.status(400).json({ message: 'Todos los campos obligatorios deben estar completos' });
     }
 
     try {
-        const newContenido = await Contenido.create(req.body);
+        // Crear el contenido (película o serie)
+        const newContenido = await Contenido.create({
+            titulo,
+            categoria_id,
+            gen,
+            resumen,
+            temporadas,
+            duracion,
+            trailer,
+            poster
+        });
+
+        // Manejar actores
+        if (actores && actores.length) {
+            for (let actorNombre of actores) {
+                // Buscar o crear actor
+                let [actor] = await Actor.findOrCreate({
+                    where: { nombre: actorNombre }
+                });
+
+                // Asociar actor al contenido en la tabla 'contenido_actores'
+                await ContenidoActores.create({
+                    contenido_id: newContenido.id,
+                    actor_id: actor.id
+                });
+            }
+        }
+
+        // Manejar géneros
+        if (generos && generos.length) {
+            for (let generoNombre of generos) {
+                // Buscar o crear género
+                let [genero] = await Genero.findOrCreate({
+                    where: { nombre: generoNombre }
+                });
+
+                // Asociar género al contenido en la tabla 'contenido_generos'
+                await ContenidoGeneros.create({
+                    contenido_id: newContenido.id,
+                    genero_id: genero.id
+                });
+            }
+        }
+
+        // Devolver el contenido creado
         res.status(201).json(newContenido);
     } catch (error) {
-        console.error('Error creating content:', error);
-        res.status(500).json({ message: 'Error creating content', error });
+        console.error('Error creando contenido:', error);
+        res.status(500).json({ message: 'Error creando contenido', error });
     }
 };
-
 
 // Actualizar contenido
 exports.updateContent = async (req, res) => {
+    const { id } = req.params; // Asumiendo que el ID del contenido está en la URL
+    const { titulo, categoria_id, gen, resumen, temporadas, duracion, trailer, poster, actores, generos } = req.body;
+
+    // Verificar si el contenido existe
+    const contenido = await Contenido.findByPk(id);
+    if (!contenido) {
+        return res.status(404).json({ message: 'Contenido no encontrado' });
+    }
+
     try {
-        const contenido = await Contenido.findByPk(req.params.id);
-        if (!contenido) {
-            return res.status(404).json({ message: 'Content not found' });
+        // Actualizar el contenido
+        await Contenido.update(
+            { titulo, categoria_id, gen, resumen, temporadas, duracion, trailer, poster },
+            { where: { id } }
+        );
+
+        // Actualizar actores
+        if (actores && actores.length) {
+            // Limpiar actores existentes
+            await ContenidoActores.destroy({ where: { contenido_id: id } });
+            for (let actorNombre of actores) {
+                let [actor] = await Actor.findOrCreate({ where: { nombre: actorNombre } });
+                await ContenidoActores.create({
+                    contenido_id: id,
+                    actor_id: actor.id
+                });
+            }
         }
-        await contenido.update(req.body);
-        res.status(200).json(contenido);
+
+        // Actualizar géneros
+        if (generos && generos.length) {
+            // Limpiar géneros existentes
+            await ContenidoGeneros.destroy({ where: { contenido_id: id } });
+            for (let generoNombre of generos) {
+                let [genero] = await Genero.findOrCreate({ where: { nombre: generoNombre } });
+                await ContenidoGeneros.create({
+                    contenido_id: id,
+                    genero_id: genero.id
+                });
+            }
+        }
+
+        // Responder con el contenido actualizado
+        const updatedContenido = await Contenido.findByPk(id, {
+            include: [Actor, Genero, Categoria]
+        });
+        res.status(200).json(updatedContenido);
     } catch (error) {
-        console.error('Error updating content:', error);
-        res.status(500).json({ message: 'Error updating content', error });
+        console.error('Error actualizando contenido:', error);
+        res.status(500).json({ message: 'Error actualizando contenido', error });
     }
 };
 
@@ -153,12 +237,12 @@ exports.deleteContent = async (req, res) => {
         const result = await Contenido.destroy({ where: { id: req.params.id } });
 
         if (!result) {
-            return res.status(404).json({ message: 'Content not found or already deleted' });
+            return res.status(404).json({ message: 'Contenido no encontrado o ya eliminado' });
         }
 
-        res.status(200).json({ message: 'Content deleted successfully' });
+        res.status(200).json({ message: 'Contenido eliminado con exito' });
     } catch (error) {
-        console.error('Error deleting content:', error);
-        res.status(500).json({ message: 'Error deleting content', error });
+        console.error('Error al eliminar contenido:', error);
+        res.status(500).json({ message: 'Error al eliminar contenido', error });
     }
 };
