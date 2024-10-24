@@ -17,18 +17,33 @@ const Contenido = sequelize.define('Contenido', {
     titulo: {
         type: DataTypes.STRING(255),
         allowNull: false,
+        validate: {
+            notEmpty: true, // Valida que no esté vacío
+            len: [2, 255]   // Longitud mínima de 2 caracteres
+        }
     },
     categoria_id: {
         type: DataTypes.BIGINT,
         allowNull: false,
+        validate: {
+            isInt: true, // Valida que sea un entero
+            notNull: { msg: 'La categoría es obligatoria' }
+        }
     },
     gen: {
         type: DataTypes.STRING(100),
         allowNull: false,
+        validate: {
+            notEmpty: true, // Valida que no esté vacío
+        }
     },
     resumen: {
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+            notEmpty: true, // Valida que no esté vacío
+            len: [10, 5000]  // Longitud mínima y máxima
+        }
     },
     temporadas: {
         type: DataTypes.STRING(50),
@@ -41,10 +56,18 @@ const Contenido = sequelize.define('Contenido', {
     trailer: {
         type: DataTypes.STRING(255),
         allowNull: false,
+        validate: {
+            isUrl: true, // Valida que sea una URL válida
+            notEmpty: true
+        }
     },
     poster: {
         type: DataTypes.STRING(255),
         allowNull: false,
+        validate: {
+            isUrl: true, // Valida que sea una URL válida
+            notEmpty: true
+        }
     },
 }, {
     tableName: 'contenido',

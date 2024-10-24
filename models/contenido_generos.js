@@ -9,6 +9,15 @@ const ContenidoGeneros = sequelize.define('contenido_generos', {
             model: 'contenido', 
             key: 'id',
         },
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'El contenido_id no puede ser nulo',
+            },
+            isInt: {
+                msg: 'El contenido_id debe ser un número entero válido',
+            },
+        },
     },
     genero_id: {
         type: DataTypes.BIGINT,
@@ -16,6 +25,15 @@ const ContenidoGeneros = sequelize.define('contenido_generos', {
         references: {
             model: 'generos', 
             key: 'id',
+        },
+        allowNull: false,
+        validate: {
+            notNull: {
+                msg: 'El genero_id no puede ser nulo',
+            },
+            isInt: {
+                msg: 'El genero_id debe ser un número entero válido',
+            },
         },
     },
 }, {

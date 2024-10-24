@@ -10,6 +10,19 @@ const Actor = sequelize.define('Actor', {
     nombre: {
         type: DataTypes.STRING(100),
         allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'El nombre del actor no puede estar vacío',
+            },
+            len: {
+                args: [1, 100],
+                msg: 'El nombre del actor debe tener entre 1 y 100 caracteres',
+            },
+            is: {
+                args: /^[a-zA-Z\s]+$/i, // Solo permite letras y espacios
+                msg: 'El nombre solo puede contener letras y espacios',
+            },
+        },
     },
 }, {
     tableName: 'actores',  // El nombre de la tabla en la base de datos
@@ -17,4 +30,3 @@ const Actor = sequelize.define('Actor', {
 });
 
 module.exports = Actor;
-
