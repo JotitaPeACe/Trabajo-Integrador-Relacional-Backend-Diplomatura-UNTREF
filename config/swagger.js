@@ -11,12 +11,12 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:3000', // Cambia a la URL de Railway una vez desplegado
+                url: 'http://localhost:3000',
                 url: 'https://trabajo-integrador-relacional-backend.onrender.com/'
             },
         ],
     },
-    apis: ['./routes/*.js'], // Ruta donde tienes tus archivos de rutas
+    apis: ['./routes/contenidoRoutes.js'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
