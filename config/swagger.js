@@ -12,6 +12,7 @@ const swaggerOptions = {
         servers: [
             {
                 url: 'http://localhost:3000', // Cambia a la URL de Railway una vez desplegado
+                url: 'https://trabajo-integrador-relacional-backend.onrender.com/'
             },
         ],
     },
