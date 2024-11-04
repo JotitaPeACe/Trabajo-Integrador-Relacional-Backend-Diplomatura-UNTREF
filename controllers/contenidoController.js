@@ -110,7 +110,7 @@ exports.filterByGenre = async (req, res) => {
     }
 };
 
-//CREAR CONTENIDO
+// Crear contenido
 exports.createContent = async (req, res) => {
     const { titulo, categoria_id, gen, resumen, temporadas, duracion, trailer, poster, actores, generos } = req.body;
 
