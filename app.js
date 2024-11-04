@@ -30,5 +30,3 @@ sequelize.sync()
     .catch((err) => {
         console.error('Error sincronizando base de datos:', err);
     });
-
-    
