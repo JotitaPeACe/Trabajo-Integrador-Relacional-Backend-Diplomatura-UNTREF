@@ -30,28 +30,38 @@ const contenidoController = require('../controllers/contenidoController');
  *             properties:
  *               titulo:
  *                 type: string
+ *                 example: "El Señor de los Anillos"
  *               categoria_id:
  *                 type: integer
+ *                 example: 1
  *               gen:
  *                 type: string
+ *                 example: "Fantasía"
  *               resumen:
  *                 type: string
+ *                 example: "Una épica aventura en la Tierra Media."
  *               temporadas:
  *                 type: string
+ *                 example: "3"
  *               duracion:
  *                 type: string
+ *                 example: "120 min"
  *               trailer:
  *                 type: string
+ *                 example: "https://www.youtube.com/watch?v=trailer-id"
  *               poster:
  *                 type: string
+ *                 example: "https://example.com/poster.jpg"
  *               actores:
  *                 type: array
  *                 items:
  *                   type: string
+ *                 example: ["Elijah Wood", "Ian McKellen"]
  *               generos:
  *                 type: array
  *                 items:
  *                   type: string
+ *                 example: ["Aventura", "Fantasía"]
  *     responses:
  *       201:
  *         description: Contenido creado
@@ -94,28 +104,38 @@ const contenidoController = require('../controllers/contenidoController');
  *             properties:
  *               titulo:
  *                 type: string
+ *                 example: "El Señor de los Anillos: Las Dos Torres"
  *               categoria_id:
  *                 type: integer
+ *                 example: 1
  *               gen:
  *                 type: string
+ *                 example: "Fantasía"
  *               resumen:
  *                 type: string
+ *                 example: "Segunda parte de la trilogía de la Tierra Media."
  *               temporadas:
  *                 type: string
+ *                 example: "3"
  *               duracion:
  *                 type: string
+ *                 example: "179 min"
  *               trailer:
  *                 type: string
+ *                 example: "https://www.youtube.com/watch?v=updated-trailer-id"
  *               poster:
  *                 type: string
+ *                 example: "https://example.com/updated-poster.jpg"
  *               actores:
  *                 type: array
  *                 items:
  *                   type: string
+ *                 example: ["Elijah Wood", "Ian McKellen", "Viggo Mortensen"]
  *               generos:
  *                 type: array
  *                 items:
  *                   type: string
+ *                 example: ["Aventura", "Fantasía", "Drama"]
  *     responses:
  *       200:
  *         description: Contenido actualizado

@@ -14,10 +14,13 @@ const swaggerOptions = {
         },
         servers: [
             {
-                // Lista de servidores donde la API puede estar disponible
-                url: 'http://localhost:3000', // URL local para pruebas
-                url: 'https://trabajo-integrador-relacional-backend.onrender.com/' // URL de producción
+                url: 'http://localhost:3000/', // URL local para pruebas
+                description: 'Servidor local'
             },
+            {
+                url: 'https://trabajo-integrador-relacional-backend.onrender.com/', // URL de producción
+                description: 'Servidor de producción'
+            }
         ],
     },
     // Especificar la ruta a los archivos de las rutas donde están definidas las API
