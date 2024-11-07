@@ -4,6 +4,9 @@
 
 Trailerflix es una API para gestionar una plataforma de streaming de películas y series. Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en contenidos, actores, géneros y categorías. La API está construida utilizando Node.js y Sequelize para interactuar con una base de datos MySQL.
 
+### Demo en Vivo
+Prueba la API en Render [aquí](https://trabajo-integrador-relacional-backend.onrender.com/api-docs/).
+
 ## Estructura del proyecto
 
 El proyecto está organizado de la siguiente manera:
@@ -127,3 +130,7 @@ La base de datos está compuesta por las siguientes tablas:
 6. Inicia la aplicación con:
    ```bash
    npm start
+
+**Nota**: Si solo deseas explorar la API, puedes usar la demo en vivo en Render [aquí](https://trabajo-integrador-relacional-backend.onrender.com/api-docs/) sin necesidad de configurar el entorno localmente.
+
+
