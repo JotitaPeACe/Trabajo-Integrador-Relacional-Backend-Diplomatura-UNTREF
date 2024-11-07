@@ -29,6 +29,67 @@ El proyecto está organizado de la siguiente manera:
 * `/routes/`: Rutas de la API
 	+ `contenidoRoutes.js`: Rutas para el contenido
 * `app.js`: Archivo principal de la aplicación
+
+## Instalación y Ejecución
+
+### Requisitos
+
+* Node.js
+* Base de datos (MySQL)
+
+### Pasos
+
+1. Clona el repositorio.
+   ```bash
+   git clone https://github.com/tu-usuario/tu-repositorio-fork.git
+2. Navega al directorio del proyecto:
+   ```bash
+   cd tu-repositorio
+3. Instala las dependencias:
+   ```bash
+   npm install
+4. Configura la conexión a la base de datos en database.js.
+
+
+5. Ejecuta el script de creación de la base de datos (trailerflix.sql) en tu cliente de MySQL.
+
+
+6. Inicia la aplicación con:
+   ```bash
+   npm start
+
+## Despliegue en Render y Railway
+
+Para este proyecto, he utilizado dos servicios de despliegue en la nube:
+
+- **Render**: La aplicación API está desplegada en [Render](https://render.com/), y puedes acceder a la documentación y endpoints de la API desde [este enlace](https://trabajo-integrador-relacional-backend.onrender.com/api-docs/).
+
+- **Railway**: La base de datos MySQL utilizada por la API está alojada en [Railway](https://railway.app/). Railway permite gestionar la base de datos de manera sencilla, facilitando la conexión con aplicaciones externas.
+
+### Configuración de la conexión
+
+Para que la API en Render se comunique correctamente con la base de datos en Railway, se configuraron las credenciales y la URL de la base de datos en las variables de entorno de Render. Aquí te explico el proceso:
+
+1. **Obtener las credenciales de la base de datos**: Al crear la base de datos en Railway, se generaron las credenciales (host, usuario, contraseña, nombre de la base de datos y puerto). Puedes verlas en el panel de Railway, en la sección de configuración de la base de datos.
+
+2. **Configurar variables de entorno en Render**:
+   - En Render, se añadieron las variables de entorno necesarias para conectar la base de datos de Railway. Estas variables incluyen:
+     - `DB_HOST`: El host de la base de datos (proporcionado por Railway).
+     - `DB_USER`: Usuario de la base de datos.
+     - `DB_PASSWORD`: Contraseña de la base de datos.
+     - `DB_NAME`: Nombre de la base de datos.
+     - `DB_PORT`: Puerto de conexión.
+     - `DB_DIALECT`: Dialecto de la base de datos, que en este caso es mysql.
+
+   Para agregar las variables de entorno en Render:
+   - Ve a la configuración de tu aplicación en Render.
+   - En la sección de **Environment**, agrega cada variable con sus valores correspondientes de Railway.
+
+3. **Probar la conexión**: Una vez configuradas las variables, Render se conecta automáticamente a la base de datos en Railway. Al hacer una solicitud a la API, la aplicación puede realizar operaciones de lectura y escritura en la base de datos alojada en Railway.
+
+Este proceso de configuración facilita la separación de responsabilidades, manteniendo la API y la base de datos en servicios independientes y escalables.
+
+
 ## Funcionalidades
 
 La API ofrece las siguientes funcionalidades:
@@ -102,35 +163,3 @@ La base de datos está compuesta por las siguientes tablas:
 - **generos**: Almacena información sobre los géneros.
   - `id` (PK)
   - `nombre`
-
-## Instalación y Ejecución
-
-### Requisitos
-
-* Node.js
-* Base de datos (MySQL)
-
-### Pasos
-
-1. Clona el repositorio.
-   ```bash
-   git clone https://github.com/tu-usuario/tu-repositorio-fork.git
-2. Navega al directorio del proyecto:
-   ```bash
-   cd tu-repositorio
-3. Instala las dependencias:
-   ```bash
-   npm install
-4. Configura la conexión a la base de datos en database.js.
-
-
-5. Ejecuta el script de creación de la base de datos (trailerflix.sql) en tu cliente de MySQL.
-
-
-6. Inicia la aplicación con:
-   ```bash
-   npm start
-
-**Nota**: Si solo deseas explorar la API, puedes usar la demo en vivo en Render [aquí](https://trabajo-integrador-relacional-backend.onrender.com/api-docs/) sin necesidad de configurar el entorno localmente.
-
-
